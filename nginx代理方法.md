@@ -13,7 +13,7 @@ tags:
 
 ### 对Nginx的了解
 1. 对于静态资源需要将其置于nginx/html的目录文件下 
-1. 了解反向代理好处 
+2. 了解反向代理好处 
 ![nginx](https://i.imgur.com/4LAh5Jx.png)
 3. nginx 讲解
 ![反向代理讲解](https://i.imgur.com/ngcdxbA.jpg)
@@ -21,8 +21,8 @@ tags:
 ![负载均衡](https://i.imgur.com/3AaqOx7.png)
 
 ### 前期准备
-1.下载nginx
-2.准备配置文件
+1. 下载nginx
+2. 准备配置文件
 
 
 ### 核心思路
