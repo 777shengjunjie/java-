@@ -10,19 +10,20 @@ tags:
 <!--more-->
 
 ## 解决方案
+
+### 对Nginx的了解
+1. 对于静态资源需要将其置于nginx/html的目录文件下 
+2.了解反向代理好处 
+![nginx](https://i.imgur.com/4LAh5Jx.png)
+3.nginx 讲解
+![反向代理讲解](https://i.imgur.com/ngcdxbA.jpg)
+4.负载均衡
+![负载均衡](https://i.imgur.com/3AaqOx7.png)
+
 ### 前期准备
 1.下载nginx
-2.文件夹目录
-* nginx
-  * sys
-  * regist
+2.准备配置文件
 
-3.了解反向代理好处 
-![nginx](https://i.imgur.com/4LAh5Jx.png)
-4.nginx 讲解
-![反向代理讲解](https://i.imgur.com/ngcdxbA.jpg)
-5.负载均衡
-![负载均衡](https://i.imgur.com/3AaqOx7.png)
 
 ### 核心思路
 
@@ -61,9 +62,10 @@ http {
     # 反向代理配置
     upstream tomcatserver1 {
              server 192.168.72.49:8081;
+			server 192.168.72.49:8082;
           }
 
-    server {
+    <!-- server {
 	    listen       80; #默认端口号
 	    server_name  localhost;  #域名或者ip
 
@@ -77,7 +79,7 @@ http {
 	    location = /50x.html {
 	        root   /sys;
 	    }
-	}
+	} --> 用于加载静态文件
 
 
     server {
@@ -92,7 +94,23 @@ http {
 
 	    error_page   500 502 503 504  /50x.html;  #错误页面
 	    location = /50x.html {
-	        root   /sys;
+	        root   /regist;
+	    }
+	}
+
+	  server {
+	    listen       82; #默认端口号
+	    server_name  localhost;  #域名或者ip
+
+	    location / {
+	      #  root   /index;  # root 默认访问资源的目录
+           proxy_pass   http://tomcatserver1; 反向代理服务器的地址
+	        index  index.html index.htm;  # 默认访问资源名称
+	    }
+
+	    error_page   500 502 503 504  /50x.html;  #错误页面
+	    location = /50x.html {
+	        root   /regist;
 	    }
 	}
 }
